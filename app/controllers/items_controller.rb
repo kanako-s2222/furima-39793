@@ -14,7 +14,8 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    if @item.save
+    if @item.valid?
+      @item.save
       redirect_to root_path
     else
       render :new, status: :unprocessable_entity
@@ -45,7 +46,7 @@ class ItemsController < ApplicationController
 
   private
   def item_params
-    params.require(:item).permit(:item, :description, :price, :category_id, :status_id, :charge_id, :day_id, :prefecture_id, :image).merge(user_id: current_user.id)
+    params.require(:item).permit(:item_name, :explain, :category_id, :condition_id, :delivery_price_id, :place_id, :delivery_day_id, :price, :image).merge(user_id: current_user.id)
   end
 
   def find_item
