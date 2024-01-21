@@ -5,10 +5,10 @@ class ItemsController < ApplicationController
   before_action :sold_out_redirect_user, only: [:edit]
 
   def index
-    @items = Item.includes(:user).order("created_at DESC")
+    @items = Item.includes(:user).order('created_at DESC')
   end
 
-   def new
+  def new
     @item = Item.new
   end
 
@@ -26,9 +26,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if current_user.id == @item.user.id
-      @item.destroy
-    end
+    @item.destroy if current_user.id == @item.user.id
     redirect_to root_path
   end
 
@@ -45,8 +43,10 @@ class ItemsController < ApplicationController
   end
 
   private
+
   def item_params
-    params.require(:item).permit(:item_name, :explain, :category_id, :condition_id, :delivery_price_id, :place_id, :delivery_day_id, :price, :image).merge(user_id: current_user.id)
+    params.require(:item).permit(:item_name, :explain, :category_id, :condition_id, :delivery_price_id, :place_id,
+                                 :delivery_day_id, :price, :image).merge(user_id: current_user.id)
   end
 
   def find_item
@@ -54,15 +54,14 @@ class ItemsController < ApplicationController
   end
 
   def redirect_not_user
-    unless current_user.id == @item.user.id
-      redirect_to root_path
-    end
+    return if current_user.id == @item.user.id
+
+    redirect_to root_path
   end
 
   def sold_out_redirect_user
-    if @item.order
-      redirect_to root_path
-    end
+    return unless @item.order
+
+    redirect_to root_path
   end
-  
 end
