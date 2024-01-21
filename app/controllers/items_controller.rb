@@ -60,8 +60,8 @@ class ItemsController < ApplicationController
   end
 
   def sold_out_redirect_user
-    return unless @item.order
+    #return unless @item.order
 
-    redirect_to root_path
+    #redirect_to root_path
   end
 end
