@@ -22,25 +22,25 @@ class ItemsController < ApplicationController
     end
   end
 
-  def show
-  end
+  #def show
+  #end
 
-  def destroy
+  #def destroy
     #@item.destroy if current_user.id == @item.user.id
     #redirect_to root_path
-  end
+  #end
 
-  def edit
-  end
+  #def edit
+  #end
 
-  def update
+  #def update
     #@item.update(item_params)
     #if @item.valid?
       #redirect_to item_path(@item.id)
     #else
       #render :edit, status: :unprocessable_entity
     #end
-  end
+  #end
 
   private
 
@@ -49,15 +49,15 @@ class ItemsController < ApplicationController
                                  :delivery_day_id, :price, :image).merge(user_id: current_user.id)
   end
 
-  def find_item
-    @item = Item.find(params[:id])
-  end
+  #def find_item
+    #@item = Item.find(params[:id])
+  #end
 
-  def redirect_not_user
-    return if current_user.id == @item.user.id
+  #def redirect_not_user
+    #return if current_user.id == @item.user.id
 
-    redirect_to root_path
-  end
+    #redirect_to root_path
+  #end
 
   def sold_out_redirect_user
     #return unless @item.order
