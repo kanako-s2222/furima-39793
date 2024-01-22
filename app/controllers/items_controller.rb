@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   #before_action :sold_out_redirect_user, only: [:edit]
 
   def index
-   #@items = Item.includes(:user).order('created_at DESC')
+   @items = Item.all.order('created_at DESC')
   end
 
   def new
