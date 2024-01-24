@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
-  #before_action :find_item, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :find_item, only: [:show, :edit, :update, :destroy]
   #before_action :redirect_not_user, only: [:edit, :update]
   #before_action :sold_out_redirect_user, only: [:edit]
 
@@ -21,8 +21,8 @@ class ItemsController < ApplicationController
     end
   end
 
-  #def show
-  #end
+  def show
+  end
 
   #def destroy
     #@item.destroy if current_user.id == @item.user.id
@@ -48,9 +48,9 @@ class ItemsController < ApplicationController
                                  :delivery_day_id, :price, :image).merge(user_id: current_user.id)
   end
 
-  #def find_item
-    #@item = Item.find(params[:id])
-  #end
+  def find_item
+    @item = Item.find(params[:id])
+  end
 
   #def redirect_not_user
     #return if current_user.id == @item.user.id
