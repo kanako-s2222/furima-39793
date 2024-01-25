@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_item, only: [:show, :edit, :update, :destroy]
-  #before_action :redirect_not_user, only: [:edit, :update]
-  #before_action :sold_out_redirect_user, only: [:edit]
+  before_action :redirect_not_user, only: [:edit, :update]
+  before_action :sold_out_redirect_user, only: [:edit]
 
   def index
    @items = Item.all.order('created_at DESC')
@@ -29,17 +29,17 @@ class ItemsController < ApplicationController
     #redirect_to root_path
   #end
 
-  #def edit
-  #end
+  def edit
+  end
 
-  #def update
-    #@item.update(item_params)
-    #if @item.valid?
-      #redirect_to item_path(@item.id)
-    #else
-      #render :edit, status: :unprocessable_entity
-    #end
-  #end
+  def update
+    @item.update(item_params)
+    if @item.valid?
+      redirect_to item_path(@item.id)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
 
   private
 
@@ -52,11 +52,11 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  #def redirect_not_user
-    #return if current_user.id == @item.user.id
+  def redirect_not_user
+    return if current_user.id == @item.user.id
 
-    #redirect_to root_path
-  #end
+    redirect_to root_path
+  end
 
   def sold_out_redirect_user
     #return unless @item.order
