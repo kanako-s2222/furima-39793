@@ -10,7 +10,7 @@ class OrderAddress
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'should be 10 or 11 digits' }
     validates :user_id
     validates :item_id
-    validates :token, presence: true
+    validates :token
   end
 
   def save

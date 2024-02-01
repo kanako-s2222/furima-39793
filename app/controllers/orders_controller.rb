@@ -1,7 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: :index
-  before_action :move_to_index, only: :index
-
+  before_action :move_to_index, only: [:index,:create]
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order_address = OrderAddress.new
@@ -9,7 +8,6 @@ class OrdersController < ApplicationController
 
   def create
     @order_address = OrderAddress.new(order_params)
-    @item = Item.find(params[:item_id])
     if @order_address.valid?
       pay_item
       @order_address.save
@@ -24,12 +22,9 @@ class OrdersController < ApplicationController
   private
 
   def move_to_index
-    return unless params[:item_id].present?
-
     @item = Item.find(params[:item_id])
-    if @item.order.present?
-      redirect_to root_path
-    elsif current_user.id == @item.user_id
+    if @item.order.present? || current_user.id == @item.user_id 
+   
       redirect_to root_path
     end
   end

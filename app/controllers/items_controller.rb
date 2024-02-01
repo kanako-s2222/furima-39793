@@ -64,10 +64,5 @@ class ItemsController < ApplicationController
 
     redirect_to root_path
   end
-
-  def prevent_edit_sold_item
-    return unless current_user && @item.order.present?
-
-    redirect_to root_path
-  end
+  
 end
